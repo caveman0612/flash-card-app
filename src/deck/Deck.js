@@ -13,7 +13,7 @@ const Deck = () => {
   let { deckId } = useParams();
   const history = useHistory();
   const [deck, setDeck] = useState({
-    name: "",
+    name: "Loading deck",
     description: "",
     id: "",
     cards: [],

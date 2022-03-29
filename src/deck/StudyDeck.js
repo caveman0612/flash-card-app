@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { readDeck } from "../utils/api";
 import BreadCumbNav from "../Layout/BreadCumbNav";
 import { useParams, Link } from "react-router-dom";
-// import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
 
 const StudyDeck = () => {
   const { deckId } = useParams();
@@ -62,7 +62,7 @@ const StudyDeck = () => {
               to={`/decks/${deckId}/cards/new`}
               className="btn btn-primary d-flex align-items-center"
             >
-              {/* <AiOutlinePlus size={20} /> */}
+              <AiOutlinePlus size={20} />
               Add Cards
             </Link>
           </div>
