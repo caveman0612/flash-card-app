@@ -22,8 +22,10 @@ const AddDeck = () => {
     };
     //making new deck and returning id
     const abortController = new AbortController();
+    // try {
     const deckWithId = await createDeck(newDeck, abortController.signal);
     history.push(`/decks/${deckWithId.id}`);
+    // }
   }
 
   return (

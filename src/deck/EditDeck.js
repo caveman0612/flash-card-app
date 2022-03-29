@@ -25,7 +25,7 @@ const EditDeck = () => {
   function handleSubmit(event) {
     event.preventDefault();
     const abortController = new AbortController();
-    updateDeck(deck, abortController.signal);
+    updateDeck(deck, abortController.signal).catch(console.log);
   }
 
   function handleChange(event) {

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { FaEye, FaSave, FaTrash } from "react-icons/fa";
 
 const Home = () => {
-  // new stuff
   //setting state
   const [decks, setDecks] = useState([]);
 
@@ -22,7 +21,7 @@ const Home = () => {
     if (confirm) {
       const abortController = new AbortController();
       //delete deck
-      await deleteDeck(id, abortController.signal);
+      await deleteDeck(id, abortController.signal).catch(console.log);
       //get new list
       await listDecks(abortController.signal).then(setDecks).catch(console.log);
     }

@@ -10,9 +10,14 @@ const StudyDeck = () => {
     name: "",
     description: "",
     id: "",
-    cards: [],
+    cards: [null, null, null],
   };
-  const _initialCardState = { id: "", front: "", back: "", deckId };
+  const _initialCardState = {
+    id: "",
+    front: "Study files loading",
+    back: "",
+    deckId,
+  };
   const [flipped, setFlipped] = useState(false);
   const [count, setCount] = useState(1);
   const [card, setCard] = useState(_initialCardState);

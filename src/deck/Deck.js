@@ -32,7 +32,7 @@ const Deck = () => {
     if (action) {
       const abortController = new AbortController();
       //deleting card and calling new deck
-      await deleteCard(id, abortController.signal);
+      await deleteCard(id, abortController.signal).catch(console.log);
       await readDeck(deckId, abortController.signal)
         .then(setDeck)
         .catch(console.log);
@@ -45,7 +45,7 @@ const Deck = () => {
     if (confirm) {
       const abortController = new AbortController();
       //deleting deck
-      deleteDeck(deck.id, abortController.signal);
+      deleteDeck(deck.id, abortController.signal).catch(console.log);
       history.push("/");
     }
   }

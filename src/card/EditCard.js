@@ -37,7 +37,7 @@ const EditCard = () => {
   function handleSubmit(event) {
     event.preventDefault();
     const abortController = new AbortController();
-    updateCard(card, abortController.signal);
+    updateCard(card, abortController.signal).catch(console.log);
     history.push(`/decks/${deckId}`);
   }
 
