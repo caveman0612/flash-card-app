@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { readDeck, readCard } from "../utils/api";
 import BreadCumbNav from "../Layout/BreadCumbNav";
 import { useParams, Link } from "react-router-dom";
-import { AiOutlinePlus } from "react-icons/ai";
+// import { AiOutlinePlus } from "react-icons/ai";
 
 const StudyDeck = () => {
   const { deckId } = useParams();
@@ -13,7 +13,7 @@ const StudyDeck = () => {
     cards: [],
   };
   const _initialCardState = { id: "", front: "", back: "", deckId };
-  const [flipped, setFlippd] = useState(false);
+  const [flipped, setFlipped] = useState(false);
   const [count, setCount] = useState(1);
   const [card, setCard] = useState(_initialCardState);
   const [deck, setDeck] = useState(_initialDeckState);
@@ -29,12 +29,6 @@ const StudyDeck = () => {
     return () => abortController.abort();
   }, [deckId]);
 
-  // useEffect(() => {
-  //   const abortController = new AbortController();
-  //   readCard(card.id, abortController.signal).then(setCard).catch(console.log);
-  //   return () => abortController.abort();
-  // }, [card.id]);
-
   function handleNext() {
     if (count === deck.cards.length) {
       const restart = window.confirm("Restart Cards");
@@ -46,7 +40,7 @@ const StudyDeck = () => {
       setCard(deck.cards[count]);
       setCount(count + 1);
     }
-    setFlippd(false);
+    setFlipped(false);
   }
 
   return (
@@ -68,7 +62,7 @@ const StudyDeck = () => {
               to={`/decks/${deckId}/cards/new`}
               className="btn btn-primary d-flex align-items-center"
             >
-              <AiOutlinePlus size={20} />
+              {/* <AiOutlinePlus size={20} /> */}
               Add Cards
             </Link>
           </div>
@@ -86,7 +80,7 @@ const StudyDeck = () => {
           <div>
             <button
               className="btn btn-secondary"
-              onClick={() => setFlippd(!flipped)}
+              onClick={() => setFlipped(!flipped)}
             >
               Flip
             </button>

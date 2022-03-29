@@ -8,7 +8,8 @@ const BreadCumbNav = ({ current, previous = null }) => {
       <ol className="breadcrumb">
         <li className="breadcrumb-item">
           <Link to="/" className="d-flex align-items-center">
-            <BsFillHouseFill size={20} className="mr-1" /> Home
+            <BsFillHouseFill size={20} className="mr-1" />
+            Home
           </Link>
         </li>
         {previous ? (
