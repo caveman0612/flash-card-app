@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { readDeck, readCard } from "../utils/api";
+import { readDeck } from "../utils/api";
 import BreadCumbNav from "../Layout/BreadCumbNav";
 import { useParams, Link } from "react-router-dom";
 // import { AiOutlinePlus } from "react-icons/ai";

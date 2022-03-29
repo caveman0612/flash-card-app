@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaEye, FaSave, FaTrash } from "react-icons/fa";
 
 const Home = () => {
+  // new stuff
   //setting state
   const [decks, setDecks] = useState([]);
 
