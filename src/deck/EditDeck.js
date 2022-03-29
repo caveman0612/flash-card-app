@@ -5,6 +5,7 @@ import BreadCumbNav from "../Layout/BreadCumbNav";
 import DeckForm from "../Layout/DeckForm";
 
 const EditDeck = () => {
+  //setting up variables
   const { deckId } = useParams();
   const [deck, setDeck] = useState({
     name: "",
@@ -13,12 +14,14 @@ const EditDeck = () => {
     cards: [],
   });
 
+  //calling api for current deck
   useEffect(() => {
     const abortController = new AbortController();
     readDeck(deckId, abortController.signal).then(setDeck).catch(console.log);
     return () => abortController.abort();
   }, [deckId]);
 
+  //updating deck
   function handleSubmit(event) {
     event.preventDefault();
     const abortController = new AbortController();
@@ -35,6 +38,7 @@ const EditDeck = () => {
         current={"Edit Deck"}
         previous={{ name: deck.name, url: `/decks/${deck.id}` }}
       />
+      {/* using dumby form for editing deck */}
       <DeckForm
         handleChange={handleChange}
         handleSubmit={handleSubmit}

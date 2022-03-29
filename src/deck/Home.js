@@ -4,19 +4,25 @@ import { Link } from "react-router-dom";
 import { FaEye, FaSave, FaTrash } from "react-icons/fa";
 
 const Home = () => {
+  //setting state
   const [decks, setDecks] = useState([]);
 
+  //getting list of decks from api
   useEffect(() => {
     const abortController = new AbortController();
     listDecks(abortController.signal).then(setDecks).catch(console.log);
     return () => abortController.abort();
   }, []);
 
+  // deleting deck and getting new list of decks
   async function handleDelete(id) {
+    //confirm with user
     const confirm = window.confirm("Delete this deck?");
     if (confirm) {
       const abortController = new AbortController();
+      //delete deck
       await deleteDeck(id, abortController.signal);
+      //get new list
       await listDecks(abortController.signal).then(setDecks).catch(console.log);
     }
   }

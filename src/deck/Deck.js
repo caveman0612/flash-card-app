@@ -6,8 +6,10 @@ import { deleteCard, deleteDeck, readDeck } from "../utils/api";
 import { FaTrash, FaSave } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { AiOutlinePlus } from "react-icons/ai";
+import CardOnDeck from "../card/CardOnDeck";
 
 const Deck = () => {
+  //seting variables
   let { deckId } = useParams();
   const history = useHistory();
   const [deck, setDeck] = useState({
@@ -17,25 +19,32 @@ const Deck = () => {
     cards: [],
   });
 
+  //calling api to set current deck
   useEffect(() => {
     const abortController = new AbortController();
     readDeck(deckId, abortController.signal).then(setDeck).catch(console.log);
     return () => abortController.abort();
   }, [deckId]);
 
-  function handleCardDelete(id) {
+  async function handleCardDelete(id) {
+    //verifying with user
     const action = window.confirm("Delete this card");
     if (action) {
       const abortController = new AbortController();
-      deleteCard(id, abortController.signal);
-      history.go(0);
+      //deleting card and calling new deck
+      await deleteCard(id, abortController.signal);
+      await readDeck(deckId, abortController.signal)
+        .then(setDeck)
+        .catch(console.log);
     }
   }
 
-  function handleDelete() {
+  function handleDeckDelete() {
+    //verifying with user
     const confirm = window.confirm("Delete this deck?");
     if (confirm) {
       const abortController = new AbortController();
+      //deleting deck
       deleteDeck(deck.id, abortController.signal);
       history.push("/");
     }
@@ -71,7 +80,7 @@ const Deck = () => {
           </Link>
           <button
             className="ml-auto btn btn-danger p-2 "
-            onClick={handleDelete}
+            onClick={handleDeckDelete}
           >
             <FaTrash />
           </button>
@@ -80,31 +89,12 @@ const Deck = () => {
           <h2>Cards</h2>
           {deck.cards.map((item) => {
             return (
-              <div className="card card-body mt-3" key={item.id}>
-                <div className="row">
-                  <div className="left col-6">
-                    <p>{item.front}</p>
-                  </div>
-                  <div className="right col-6">
-                    <p>{item.back}</p>
-                    <div className="d-flex justify-content-end">
-                      <Link
-                        to={`/decks/${deckId}/cards/${item.id}/edit`}
-                        className="btn btn-secondary d-flex align-items-center"
-                      >
-                        <MdEdit size={20} />
-                        Edit
-                      </Link>
-                      <button
-                        className=" btn btn-danger p-2 ml-2"
-                        onClick={() => handleCardDelete(item.id)}
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <CardOnDeck
+                handleCardDelete={handleCardDelete}
+                item={item}
+                deckId={deckId}
+                key={item.id}
+              />
             );
           })}
         </section>
