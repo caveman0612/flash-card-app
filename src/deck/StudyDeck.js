@@ -26,14 +26,14 @@ const StudyDeck = () => {
   //call deck api and setting deck
   useEffect(() => {
     const abortController = new AbortController();
-    readDeck(deckId, abortController.signal)
-      .then((deck) => {
-        setDeck(deck);
-        setCard(deck.cards[0]);
-      })
-      .catch(console.log);
+    async function apiCall() {
+      const deck = await readDeck(deckId, abortController.signal);
+      setDeck(deck);
+      setCard(deck.cards[count - 1]);
+    }
+    apiCall();
     return () => abortController.abort();
-  }, [deckId]);
+  }, [count, deckId]);
 
   //handle next which tracks count and current card.
   function handleNext() {
@@ -41,12 +41,10 @@ const StudyDeck = () => {
     if (count === deck.cards.length) {
       const restart = window.confirm("Restart Cards");
       if (restart) {
-        setCard(deck.cards[0]);
         setCount(1);
       }
       // set card to next and add count to one
     } else {
-      setCard(deck.cards[count]);
       setCount(count + 1);
     }
     setFlipped(false);
