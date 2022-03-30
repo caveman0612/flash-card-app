@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 
+//dummy card on the deck page
 const CardOnDeck = ({ item, deckId, handleCardDelete }) => {
   return (
     <div className="card card-body mt-3" key={item.id}>

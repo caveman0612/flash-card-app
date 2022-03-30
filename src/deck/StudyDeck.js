@@ -23,6 +23,7 @@ const StudyDeck = () => {
   const [card, setCard] = useState(_initialCardState);
   const [deck, setDeck] = useState(_initialDeckState);
 
+  //call deck api and setting deck
   useEffect(() => {
     const abortController = new AbortController();
     readDeck(deckId, abortController.signal)
@@ -34,13 +35,16 @@ const StudyDeck = () => {
     return () => abortController.abort();
   }, [deckId]);
 
+  //handle next which tracks count and current card.
   function handleNext() {
+    // reset if count is at end
     if (count === deck.cards.length) {
       const restart = window.confirm("Restart Cards");
       if (restart) {
         setCard(deck.cards[0]);
         setCount(1);
       }
+      // set card to next and add count to one
     } else {
       setCard(deck.cards[count]);
       setCount(count + 1);

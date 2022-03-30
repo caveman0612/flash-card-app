@@ -23,6 +23,7 @@ const EditDeck = () => {
     return () => abortController.abort();
   }, [deckId]);
 
+  //api call to update deck
   useEffect(() => {
     if (deckToSubmit) {
       const abortController = new AbortController();
@@ -31,7 +32,7 @@ const EditDeck = () => {
     }
   }, [deckToSubmit]);
 
-  //updating deck
+  //updating deck and setting state
   function handleSubmit(event) {
     event.preventDefault();
     const newDeck = { ...deck };

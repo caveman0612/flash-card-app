@@ -9,6 +9,7 @@ const Home = () => {
   const [deckIdToDelete, setDeckIdToDelete] = useState(null);
   const [reset, setReset] = useState(false);
 
+  //api call to delete deck
   useEffect(() => {
     if (deckIdToDelete) {
       const abortController = new AbortController();
@@ -19,12 +20,14 @@ const Home = () => {
     }
   }, [deckIdToDelete]);
 
+  //api call to list decks when reset is called
   useEffect(() => {
     const abortController = new AbortController();
     listDecks(abortController.signal).then(setDecks).catch(console.log);
     return () => abortController.abort();
   }, [reset]);
 
+  //set deck to be deleted
   function handleDelete(id) {
     const confirm = window.confirm("Delete this deck?");
     if (confirm) {
