@@ -6,24 +6,29 @@ import { FaEye, FaSave, FaTrash } from "react-icons/fa";
 const Home = () => {
   //setting state
   const [decks, setDecks] = useState([]);
+  const [deckIdToDelete, setDeckIdToDelete] = useState(null);
+  const [reset, setReset] = useState(false);
 
-  //getting list of decks from api
+  useEffect(() => {
+    if (deckIdToDelete) {
+      const abortController = new AbortController();
+      deleteDeck(deckIdToDelete, abortController.signal)
+        .then(setReset)
+        .catch(console.log);
+      return () => abortController.abort();
+    }
+  }, [deckIdToDelete]);
+
   useEffect(() => {
     const abortController = new AbortController();
     listDecks(abortController.signal).then(setDecks).catch(console.log);
     return () => abortController.abort();
-  }, []);
+  }, [reset]);
 
-  // deleting deck and getting new list of decks
-  async function handleDelete(id) {
-    //confirm with user
+  function handleDelete(id) {
     const confirm = window.confirm("Delete this deck?");
     if (confirm) {
-      const abortController = new AbortController();
-      //delete deck
-      await deleteDeck(id, abortController.signal).catch(console.log);
-      //get new list
-      await listDecks(abortController.signal).then(setDecks).catch(console.log);
+      setDeckIdToDelete(id);
     }
   }
 

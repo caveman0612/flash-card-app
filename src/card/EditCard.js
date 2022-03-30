@@ -31,13 +31,18 @@ const EditCard = () => {
     return () => abortController.abort();
   }, [cardId]);
 
-  function handleclick() {
-    history.push(`/decks/${deckId}`);
-  }
   function handleSubmit(event) {
     event.preventDefault();
-    const abortController = new AbortController();
-    updateCard(card, abortController.signal).catch(console.log);
+    try {
+      const abortController = new AbortController();
+      updateCard(card, abortController.signal);
+      history.push(`/decks/${deckId}`);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  function handleclick() {
     history.push(`/decks/${deckId}`);
   }
 

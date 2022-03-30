@@ -14,6 +14,8 @@ const EditDeck = () => {
     cards: [],
   });
 
+  const [deckToSubmit, setDeckToSubmit] = useState(null);
+
   //calling api for current deck
   useEffect(() => {
     const abortController = new AbortController();
@@ -21,11 +23,19 @@ const EditDeck = () => {
     return () => abortController.abort();
   }, [deckId]);
 
+  useEffect(() => {
+    if (deckToSubmit) {
+      const abortController = new AbortController();
+      updateDeck(deckToSubmit, abortController.signal).catch(console.log);
+      return () => abortController.abort();
+    }
+  }, [deckToSubmit]);
+
   //updating deck
   function handleSubmit(event) {
     event.preventDefault();
-    const abortController = new AbortController();
-    updateDeck(deck, abortController.signal).catch(console.log);
+    const newDeck = { ...deck };
+    setDeckToSubmit(newDeck);
   }
 
   function handleChange(event) {

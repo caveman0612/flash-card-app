@@ -30,6 +30,7 @@ const Deck = () => {
     return () => abortController.abort();
   }, [deckId, cardToDelete]);
 
+  //calling api to delete card using card id
   useEffect(() => {
     const abortController = new AbortController();
     if (cardToDelete) {
@@ -38,6 +39,7 @@ const Deck = () => {
     return () => abortController.abort();
   }, [cardToDelete]);
 
+  //calling api to delete deck and pushing to home
   useEffect(() => {
     const abortController = new AbortController();
     if (deckToDelete) {
@@ -46,16 +48,16 @@ const Deck = () => {
     return () => abortController.abort();
   }, [deckToDelete]);
 
+  // card id to be deleted
   function handleCardDelete(id) {
-    //verifying with user
     const action = window.confirm("Delete this card");
     if (action) {
       setCardToDelete(id);
     }
   }
 
+  //seeting deck id to be deleted
   function handleDeckDelete() {
-    //verifying with user
     const confirm = window.confirm("Delete this deck?");
     if (confirm) {
       setDeckToDelete(deck.id);

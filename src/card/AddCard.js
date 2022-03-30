@@ -18,12 +18,21 @@ const AddCard = () => {
 
   const [deck, setDeck] = useState(_initialDeckState);
   const [formData, setFormData] = useState(_initialFormState);
+  const [newCardToAdd, setNewCardToAdd] = useState(null);
 
   useEffect(() => {
     const abortController = new AbortController();
     readDeck(deckId, abortController.signal).then(setDeck).catch(console.log);
     return () => abortController.abort();
   }, [deckId]);
+
+  useEffect(() => {
+    if (newCardToAdd) {
+      const abortController = new AbortController();
+      createCard(deck.id, newCardToAdd, abortController.signal);
+      return () => abortController.abort();
+    }
+  }, [deck.id, newCardToAdd]);
 
   function handleClick() {
     history.push(`/decks/${deckId}`);
@@ -40,8 +49,7 @@ const AddCard = () => {
       front: formData.front,
       back: formData.back,
     };
-    const abortController = new AbortController();
-    createCard(deck.id, newCard, abortController.signal);
+    setNewCardToAdd(newCard);
     setFormData(_initialFormState);
   }
 
