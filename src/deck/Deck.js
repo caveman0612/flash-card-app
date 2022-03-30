@@ -18,24 +18,39 @@ const Deck = () => {
     id: "",
     cards: [],
   });
+  const [cardToDelete, setCardToDelete] = useState(null);
+  const [deckToDelete, setDeckToDelete] = useState(null);
 
   //calling api to set current deck
   useEffect(() => {
     const abortController = new AbortController();
-    readDeck(deckId, abortController.signal).then(setDeck).catch(console.log);
+    readDeck(deckId, abortController.signal)
+      .then(setDeck)
+      .catch(() => console.log("abort"));
     return () => abortController.abort();
-  }, [deckId]);
+  }, [deckId, cardToDelete]);
 
-  async function handleCardDelete(id) {
+  useEffect(() => {
+    const abortController = new AbortController();
+    if (cardToDelete) {
+      deleteCard(cardToDelete, abortController.signal).catch(console.log);
+    }
+    return () => abortController.abort();
+  }, [cardToDelete]);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    if (deckToDelete) {
+      deleteDeck(deckToDelete, abortController.signal).catch(console.log);
+    }
+    return () => abortController.abort();
+  }, [deckToDelete]);
+
+  function handleCardDelete(id) {
     //verifying with user
     const action = window.confirm("Delete this card");
     if (action) {
-      const abortController = new AbortController();
-      //deleting card and calling new deck
-      await deleteCard(id, abortController.signal).catch(console.log);
-      await readDeck(deckId, abortController.signal)
-        .then(setDeck)
-        .catch(console.log);
+      setCardToDelete(id);
     }
   }
 
@@ -43,9 +58,7 @@ const Deck = () => {
     //verifying with user
     const confirm = window.confirm("Delete this deck?");
     if (confirm) {
-      const abortController = new AbortController();
-      //deleting deck
-      deleteDeck(deck.id, abortController.signal).catch(console.log);
+      setDeckToDelete(deck.id);
       history.push("/");
     }
   }
