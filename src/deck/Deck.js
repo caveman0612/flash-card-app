@@ -44,7 +44,9 @@ const Deck = () => {
     const abortController = new AbortController();
     if (deckToDelete) {
       deleteDeck(deckToDelete, abortController.signal).catch(console.log);
+      history.push("/");
     }
+
     return () => abortController.abort();
   }, [deckToDelete]);
 
@@ -61,7 +63,6 @@ const Deck = () => {
     const confirm = window.confirm("Delete this deck?");
     if (confirm) {
       setDeckToDelete(deck.id);
-      history.push("/");
     }
   }
 
