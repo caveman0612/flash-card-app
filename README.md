@@ -1,17 +1,13 @@
-For each of your project READMEs, include the following information, as applicable:
+# Trello Clone
 
-Context on the problem or project (what it is and why you're doing it)
+## Overview
 
-Information on your research or user case
+This project allows the user to make decks and have flip cards in each deck. There is a function that allows the user to go into study mode which hides the back of the card. 
 
-How the project is intended to be used or could be used
+## Technologies
 
-Various features or aspects of the project
+This project is built on React with javascript. 
 
-The technologies and tools that you used to make your project and why
+## Going Forward
 
-Any discoveries that you made while making the project
-
-Your future goals for the project
-
-Relevant screenshots or supplemental images
+Going forward I am going to build my own back end since we only built the front-end and I want to make this my own personal full stack project
